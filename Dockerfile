@@ -3,7 +3,7 @@
 # See https://hub.docker.com/r/library/gcc/ for all supported GCC
 # tags from Docker Hub.
 # See https://docs.docker.com/samples/library/gcc/ for more on how to use this image
-FROM gcc:12.1
+FROM gcc:12.1 as build
 
 # These commands copy your files into the specified directory in the image
 # and set that as the working location
@@ -13,7 +13,12 @@ WORKDIR /usr/src/myapp
 # This command compiles your app using GCC, adjust for your source code
 RUN g++ -o myapp MyCpp/MyCpp.cpp
 
-# This command runs your application, comment out this line to compile only
-CMD ["./myapp"]
+FROM alpine:3.16 as runtime
+RUN apk update && apk add libc6-compat libstdc++
+COPY --from=build /usr/src/myapp/myapp /usr/local/myRenamedApp
+WORKDIR /usr/local/
 
-LABEL Name=mycpp Version=0.0.1
+# This command runs your application, comment out this line to compile only
+CMD ["./myRenamedApp"]
+
+LABEL Name=myRenamedApp Version=0.0.1
