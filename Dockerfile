@@ -14,11 +14,11 @@ WORKDIR /usr/src/myapp
 RUN g++ -o myapp MyCpp/MyCpp.cpp
 
 FROM alpine:3.16 as runtime
-RUN apk update && apk add libc6-compat libstdc++
+RUN apk add --no-cache libc6-compat=1.2.3-r0 libstdc++=11.2.1_git20220219-r2
 COPY --from=build /usr/src/myapp/myapp /usr/local/myRenamedApp
 WORKDIR /usr/local/
 
 # This command runs your application, comment out this line to compile only
 CMD ["./myRenamedApp"]
 
-LABEL Name=myRenamedApp Version=0.0.1
+LABEL name=myRenamedApp version=0.0.1
