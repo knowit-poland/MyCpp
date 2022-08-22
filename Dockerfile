@@ -3,7 +3,7 @@
 # See https://hub.docker.com/r/library/gcc/ for all supported GCC
 # tags from Docker Hub.
 # See https://docs.docker.com/samples/library/gcc/ for more on how to use this image
-FROM gcc:12.1 as build
+FROM gcc:12.2.0 as build
 
 # These commands copy your files into the specified directory in the image
 # and set that as the working location
