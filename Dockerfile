@@ -13,7 +13,7 @@ WORKDIR /usr/src/myapp
 # This command compiles your app using GCC, adjust for your source code
 RUN g++ -o myapp MyCpp/MyCpp.cpp
 
-FROM alpine:3.16 as runtime
+FROM alpine:3.17 as runtime
 RUN apk add --no-cache libc6-compat=1.2.3-r0 libstdc++=11.2.1_git20220219-r2
 COPY --from=build /usr/src/myapp/myapp /usr/local/myRenamedApp
 WORKDIR /usr/local/
